@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrack - Personal Finance Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <i class="fas fa-wallet text-2xl mr-2"></i>
+                <a href="index.html" class="text-2xl font-bold">FinTrack</a>
+            </div>
+            <ul class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <li><a href="login.html" class="hover:underline flex items-center"><i class="fas fa-sign-in-alt mr-1"></i> Login</a></li>
+                <li><a href="register.html" class="hover:underline flex items-center"><i class="fas fa-user-plus mr-1"></i> Register</a></li>
+                <li><a href="home.html" class="hover:underline flex items-center"><i class="fas fa-tachometer-alt mr-1"></i> Dashboard</a></li>
+                <li><a href="salary.html" class="hover:underline flex items-center"><i class="fas fa-money-bill-wave mr-1"></i> Income</a></li>
+                <li><a href="expense.html" class="hover:underline flex items-center"><i class="fas fa-receipt mr-1"></i> Expenses</a></li>
+                <li><a href="loan.html" class="hover:underline flex items-center"><i class="fas fa-hand-holding-usd mr-1"></i> Loans</a></li>
+                <li><a href="profile.html" class="hover:underline flex items-center"><i class="fas fa-user-circle mr-1"></i> Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-blue-700 text-white py-20">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Take Control of Your Finances</h1>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Track income, expenses, loans, and more in one powerful dashboard</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="register.html" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                    Get Started - It's Free
+                </a>
+                <a href="login.html" class="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition duration-300">
+                    Already a User? Login
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Income Tracking</h3>
+                    <p class="text-gray-600">Record and categorize all your income sources with detailed analytics.</p>
+                    <a href="salary.html" class="text-blue-500 hover:underline mt-4 inline-block">Explore →</a>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-money-bill-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Expense Management</h3>
+                    <p class="text-gray-600">Monitor spending patterns and identify saving opportunities.</p>
+                    <a href="expense.html" class="text-blue-500 hover:underline mt-4 inline-block">Explore →</a>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Loan Calculator</h3>
+                    <p class="text-gray-600">Calculate EMIs and track repayment schedules for all your loans.</p>
+                    <a href="loan.html" class="text-blue-500 hover:underline mt-4 inline-block">Explore →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2023 FinTrack. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
