@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Confirmation | FinTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <i class="fas fa-wallet text-2xl mr-2"></i>
+                <a href="index.html" class="text-2xl font-bold">FinTrack</a>
+            </div>
+            <ul class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <li><a href="home.html" class="hover:underline flex items-center"><i class="fas fa-tachometer-alt mr-1"></i> Dashboard</a></li>
+                <li><a href="salary.html" class="hover:underline flex items-center"><i class="fas fa-money-bill-wave mr-1"></i> Income</a></li>
+                <li><a href="expense.html" class="hover:underline flex items-center"><i class="fas fa-receipt mr-1"></i> Expenses</a></li>
+                <li><a href="loan.html" class="hover:underline flex items-center"><i class="fas fa-hand-holding-usd mr-1"></i> Loans</a></li>
+                <li><a href="profile.html" class="hover:underline flex items-center"><i class="fas fa-user-circle mr-1"></i> Profile</a></li>
+                <li><a href="#" id="logoutBtn" class="hover:underline flex items-center"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check-circle text-green-500 text-3xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold mb-2">Expense Recorded Successfully!</h1>
+            <p class="text-gray-600 mb-6">Your expense has been saved to your financial records.</p>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-medium">Amount:</span>
+                    <span class="text-red-600 font-semibold" id="expenseAmountDisplay">-</span>
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-medium">Category:</span>
+                    <span id="expenseCategoryDisplay">-</span>
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-medium">Date:</span>
+                    <span id="expenseDateDisplay">-</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-medium">Description:</span>
+                    <span id="expenseDescriptionDisplay">-</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="expense.html" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center">
+                    <i class="fas fa-plus mr-2"></i> Add Another Expense
+                </a>
+                <a href="home.html" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition flex items-center justify-center">
+                    <i class="fas fa-tachometer-alt mr-2"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2023 FinTrack. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('currentUser');
+                showToast('Logged out successfully', 'success');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            });
+
+            // Get the latest expense from localStorage
+            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            const expenses = transactions.filter(t => t.type === 'expense');
+            const latestExpense = expenses[expenses.length - 1];
+
+            if (latestExpense) {
+                document.getElementById('expenseAmountDisplay').textContent = `-${formatCurrency(latestExpense.amount)}`;
+                document.getElementById('expenseCategoryDisplay').textContent = latestExpense.category || 'N/A';
+                document.getElementById('expenseDateDisplay').textContent = new Date(latestExpense.date).toLocaleDateString();
+                document.getElementById('expenseDescriptionDisplay').textContent = latestExpense.description || 'N/A';
+            } else {
+                // If no expense found, redirect back to expense page
+                window.location.href = 'expense.html';
+            }
+        });
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(amount);
+        }
+    </script>
+</body>
+</html>
