@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses | FinTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <i class="fas fa-wallet text-2xl mr-2"></i>
+                <a href="index.html" class="text-2xl font-bold">FinTrack</a>
+            </div>
+            <ul class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <li><a href="home.html" class="hover:underline flex items-center"><i class="fas fa-tachometer-alt mr-1"></i> Dashboard</a></li>
+                <li><a href="salary.html" class="hover:underline flex items-center"><i class="fas fa-money-bill-wave mr-1"></i> Income</a></li>
+                <li><a href="expense.html" class="font-bold text-blue-200 flex items-center"><i class="fas fa-receipt mr-1"></i> Expenses</a></li>
+                <li><a href="loan.html" class="hover:underline flex items-center"><i class="fas fa-hand-holding-usd mr-1"></i> Loans</a></li>
+                <li><a href="profile.html" class="hover:underline flex items-center"><i class="fas fa-user-circle mr-1"></i> Profile</a></li>
+                <li><a href="#" id="logoutBtn" class="hover:underline flex items-center"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">Expense Management</h1>
+        
+        <!-- Add Expense Form -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Add New Expense</h2>
+            <form id="expenseForm" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="expenseDate" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <input type="date" id="expenseDate" name="date" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="expenseAmount" class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+                        <input type="number" id="expenseAmount" name="amount" min="0.01" step="0.01" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="0.00">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="expenseDescription" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <input type="text" id="expenseDescription" name="description"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="What was this expense for?">
+                </div>
+                
+                <div>
+                    <label for="expenseCategory" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="expenseCategory" name="category" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
+                    <i class="fas fa-save mr-2"></i> Save Expense
+                </button>
+            </form>
+        </div>
+        
+        <!-- Expense History -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">Expense History</h2>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="expenseSearch" placeholder="Search expenses..." 
+                        class="px-3 py-1 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    <select id="expenseFilter" 
+                        class="px-3 py-1 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="all">All Categories</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expenseTable" class="bg-white divide-y divide-gray-200">
+                        <!-- Expenses will be loaded here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-4 flex justify-between items-center">
+                <div class="text-sm text-gray-500" id="expenseSummary">
+                    Showing 0 expenses
+                </div>
+                <div class="flex space-x-2">
+                    <button id="prevPage" class="px-3 py-1 border rounded-md bg-gray-100 disabled:opacity-50"><</button>
+                    <span id="pageInfo" class="px-3 py-1">Page 1</span>
+                    <button id="nextPage" class="px-3 py-1 border rounded-md bg-gray-100 disabled:opacity-50">></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2023 FinTrack. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('currentUser');
+                showToast('Logged out successfully', 'success');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            });
+
+            // Set default date to today
+            document.getElementById('expenseDate').valueAsDate = new Date();
+
+            // Load expenses
+            loadExpenses();
+
+            // Form submission
+            document.getElementById('expenseForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const expense = {
+                    date: document.getElementById('expenseDate').value,
+                    description: document.getElementById('expenseDescription').value,
+                    category: document.getElementById('expenseCategory').value,
+                    amount: parseFloat(document.getElementById('expenseAmount').value)
+                };
+
+                if (addTransaction('expense', expense)) {
+                    showToast('Expense added successfully', 'success');
+                    // Redirect to confirmation page after 1 second
+                    setTimeout(() => {
+                        window.location.href = 'after-expense.html';
+                    }, 1000);
+                } else {
+                    showToast('Failed to add expense', 'error');
+                }
+            });
+
+            // Search and filter functionality
+            document.getElementById('expenseSearch').addEventListener('input', loadExpenses);
+            document.getElementById('expenseFilter').addEventListener('change', loadExpenses);
+
+            // Pagination buttons
+            document.getElementById('prevPage').addEventListener('click', function() {
+                currentPage = Math.max(1, currentPage - 1);
+                loadExpenses();
+            });
+
+            document.getElementById('nextPage').addEventListener('click', function() {
+                currentPage++;
+                loadExpenses();
+            });
+        });
+
+        let currentPage = 1;
+        const itemsPerPage = 5;
+
+        function loadExpenses() {
+            const searchTerm = document.getElementById('expenseSearch').value.toLowerCase();
+            const filterCategory = document.getElementById('expenseFilter').value;
+            
+            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            const expenses = transactions.filter(t => t.type === 'expense');
+            
+            // Filter expenses
+            let filteredExpenses = expenses.filter(expense => {
+                const matchesSearch = expense.description?.toLowerCase().includes(searchTerm) || 
+                                     expense.category?.toLowerCase().includes(searchTerm);
+                const matchesCategory = filterCategory === 'all' || expense.category === filterCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            // Sort by date (newest first)
+            filteredExpenses.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Pagination
+            const totalPages = Math.ceil(filteredExpenses.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const paginatedExpenses = filteredExpenses.slice(startIndex, startIndex + itemsPerPage);
+
+            // Update table
+            const tableBody = document.getElementById('expenseTable');
+            tableBody.innerHTML = '';
+
+            if (paginatedExpenses.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                        No expenses found
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            } else {
+                paginatedExpenses.forEach(expense => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${new Date(expense.date).toLocaleDateString()}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            ${expense.description || 'N/A'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${expense.category || 'N/A'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">
+                            -${formatCurrency(expense.amount)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <button class="text-red-500 hover:text-red-700" onclick="deleteExpense('${expense.id}')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Update summary and pagination controls
+            document.getElementById('expenseSummary').textContent = 
+                `Showing ${filteredExpenses.length} expenses (${startIndex + 1}-${Math.min(startIndex + itemsPerPage, filteredExpenses.length)})`;
+            document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages || 1}`;
+            document.getElementById('prevPage').disabled = currentPage <= 1;
+            document.getElementById('nextPage').disabled = currentPage >= totalPages;
+        }
+
+        function deleteExpense(id) {
+            if (confirm('Are you sure you want to delete this expense?')) {
+                const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+                const updatedTransactions = transactions.filter(t => t.id !== id);
+                localStorage.setItem('transactions', JSON.stringify(updatedTransactions));
+                showToast('Expense deleted', 'success');
+                loadExpenses();
+            }
+        }
+    </script>
+</body>
+</html>
