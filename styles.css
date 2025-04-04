@@ -1,0 +1,55 @@
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+/* Navigation */
+nav a {
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    transform: translateY(-2px);
+}
+
+/* Buttons */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Feature Cards */
+.feature-card {
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Form Elements */
+input, select, textarea {
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    nav ul {
+        gap: 1rem;
+    }
+    
+    .hero-text {
+        font-size: 2.5rem;
+    }
+}
