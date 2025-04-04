@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loans | FinTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <i class="fas fa-wallet text-2xl mr-2"></i>
+                <a href="index.html" class="text-2xl font-bold">FinTrack</a>
+            </div>
+            <ul class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <li><a href="home.html" class="hover:underline flex items-center"><i class="fas fa-tachometer-alt mr-1"></i> Dashboard</a></li>
+                <li><a href="salary.html" class="hover:underline flex items-center"><i class="fas fa-money-bill-wave mr-1"></i> Income</a></li>
+                <li><a href="expense.html" class="hover:underline flex items-center"><i class="fas fa-receipt mr-1"></i> Expenses</a></li>
+                <li><a href="loan.html" class="font-bold text-blue-200 flex items-center"><i class="fas fa-hand-holding-usd mr-1"></i> Loans</a></li>
+                <li><a href="profile.html" class="hover:underline flex items-center"><i class="fas fa-user-circle mr-1"></i> Profile</a></li>
+                <li><a href="#" id="logoutBtn" class="hover:underline flex items-center"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">Loan Management</h1>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Add New Loan</h2>
+            <form id="loanForm" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="loanAmount" class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+                        <input type="number" id="loanAmount" name="amount" min="0.01" step="0.01" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="0.00">
+                    </div>
+                    <div>
+                        <label for="loanInterest" class="block text-sm font-medium text-gray-700 mb-1">Interest Rate (%)</label>
+                        <input type="number" id="loanInterest" name="interest" min="0" step="0.01" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="5.0">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="loanStartDate" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                        <input type="date" id="loanStartDate" name="startDate" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="loanTerm" class="block text-sm font-medium text-gray-700 mb-1">Term (months)</label>
+                        <input type="number" id="loanTerm" name="term" min="1" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="12">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="loanLender" class="block text-sm font-medium text-gray-700 mb-1">Lender</label>
+                    <input type="text" id="loanLender" name="lender"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Bank or lender name">
+                </div>
+                
+                <div>
+                    <label for="loanPurpose" class="block text-sm font-medium text-gray-700 mb-1">Purpose</label>
+                    <textarea id="loanPurpose" name="purpose" rows="2"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="What is this loan for?"></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
+                    <i class="fas fa-save mr-2"></i> Save Loan
+                </button>
+            </form>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">Your Loans</h2>
+                <input type="text" id="loanSearch" placeholder="Search loans..." 
+                    class="px-3 py-1 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lender</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Interest</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Term</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="loanTable" class="bg-white divide-y divide-gray-200">
+                        <!-- Loans will be loaded here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2023 FinTrack. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Set default date to today
+            document.getElementById('loanStartDate').valueAsDate = new Date();
+
+            // Load loans
+            loadLoans();
+
+            // Form submission
+            document.getElementById('loanForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const loan = {
+                    amount: parseFloat(document.getElementById('loanAmount').value),
+                    interest: parseFloat(document.getElementById('loanInterest').value),
+                    startDate: document.getElementById('loanStartDate').value,
+                    term: parseInt(document.getElementById('loanTerm').value),
+                    lender: document.getElementById('loanLender').value,
+                    purpose: document.getElementById('loanPurpose').value
+                };
+
+                if (addLoan(loan)) {
+                    showToast('Loan added successfully', 'success');
+                    this.reset();
+                    document.getElementById('loanStartDate').valueAsDate = new Date();
+                    loadLoans();
+                } else {
+                    showToast('Failed to add loan', 'error');
+                }
+            });
+
+            // Search functionality
+            document.getElementById('loanSearch').addEventListener('input', loadLoans);
+        });
+
+        function loadLoans() {
+            const searchTerm = document.getElementById('loanSearch').value.toLowerCase();
+            const loans = JSON.parse(localStorage.getItem('loans')) || [];
+            
+            // Filter loans
+            let filteredLoans = loans.filter(loan => {
+                return loan.lender?.toLowerCase().includes(searchTerm) || 
+                       loan.purpose?.toLowerCase().includes(searchTerm);
+            });
+
+            // Update table
+            const tableBody = document.getElementById('loanTable');
+            tableBody.innerHTML = '';
+
+            if (filteredLoans.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                        No loans found
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            } else {
+                filteredLoans.forEach(loan => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            ${loan.lender || 'N/A'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${formatCurrency(loan.amount)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${loan.interest}%
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${loan.term} months
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${new Date(loan.startDate).toLocaleDateString()}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <button class="text-red-500 hover:text-red-700" onclick="deleteLoan('${loan.id}')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        function addLoan(loan) {
+            const loans = JSON.parse(localStorage.getItem('loans')) || [];
+            loans.push({
+                id: Date.now(),
+                ...loan
+            });
+            localStorage.setItem('loans', JSON.stringify(loans));
+            return true;
+        }
+
+        function deleteLoan(id) {
+            if (confirm('Are you sure you want to delete this loan?')) {
+                const loans = JSON.parse(localStorage.getItem('loans')) || [];
+                const updatedLoans = loans.filter(loan => loan.id !== id);
+                localStorage.setItem('loans', JSON.stringify(updatedLoans));
+                showToast('Loan deleted', 'success');
+                loadLoans();
+            }
+        }
+    </script>
+</body>
+</html>
